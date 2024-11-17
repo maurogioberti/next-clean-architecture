@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@codescouts/di": "^0.0.10",
+    "@codescouts/ui": "^1.0.19",
     "next": "14.2.12",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "ts-injecty": "^0.0.22"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.5.0",
