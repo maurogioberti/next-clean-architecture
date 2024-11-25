@@ -6,7 +6,7 @@ import { MessageRepositoryImpl } from "@/core/infrastructure/repository/MessageR
 
 export const buildDependencies = (builder: typeof register) => {
   return [
-    builder("MessageRepository")
+    builder(MessageRepositoryImpl.getInterface())
       .withDynamic(() => new MessageRepositoryImpl())
       .build(),
 
@@ -15,7 +15,7 @@ export const buildDependencies = (builder: typeof register) => {
       .build(),
 
     builder(GetMessageUseCase)
-      .withDependency("MessageRepository")
+      .withDependency(MessageRepositoryImpl.getInterface())
       .build(),
   ];
 };
