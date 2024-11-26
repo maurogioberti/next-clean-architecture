@@ -1,11 +1,18 @@
 import { BaseRepository } from "./base/BaseRepository";
 import { Message } from "../../domain/model/Message";
-import { MessageRepository as MessageRepository } from "../../domain/repository/MessageRepository";
+import { MessageRepository } from "../../domain/repository/MessageRepository";
+import { MessageService } from "../../domain/services/MessageService";
 
 export class MessageRepositoryImpl extends BaseRepository implements MessageRepository {
-  private static readonly DEFAULT_MESSAGE = "Hello World! I am implementing Clean Code principles.";
+  private messageService: MessageService;
 
-  getMessage(): Message {
-    return new Message(MessageRepositoryImpl.DEFAULT_MESSAGE);
+  constructor(messageService: MessageService) {
+    super();
+    this.messageService = messageService;
+  }
+
+  async getMessage(): Promise<Message> {
+    const message = await this.messageService.fetchMessage();
+    return message;
   }
 }

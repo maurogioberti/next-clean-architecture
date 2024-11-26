@@ -1,13 +1,19 @@
 import { MessageRepositoryImpl } from "./MessageRepositoryImpl";
-import { describe, test, expect } from "@jest/globals";
-
-const EXPECTED_MESSAGE = "Hello World! I am implementing Clean Code principles.";
+import { MessageService } from "../../domain/services/MessageService";
+import { Message } from "../../domain/model/Message";
+import { describe, test, expect, jest } from "@jest/globals";
+import { faker } from "@faker-js/faker";
 
 describe("MessageRepositoryImpl", () => {
-  test("should return a predefined message", () => {
-    const repository = new MessageRepositoryImpl();
-    const result = repository.getMessage();
+  test("should return a dynamically generated message", async () => {
+    const dynamicMessage = faker.lorem.sentence();
+    const mockMessageService: MessageService = {
+      fetchMessage: jest.fn<() => Promise<Message>>().mockResolvedValue(new Message(dynamicMessage)),
+    };
 
-    expect(result.content).toBe(EXPECTED_MESSAGE);
+    const repository = new MessageRepositoryImpl(mockMessageService);
+    const result = await repository.getMessage();
+
+    expect(result.content).toBe(dynamicMessage);
   });
 });

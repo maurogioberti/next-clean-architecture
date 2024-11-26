@@ -3,9 +3,11 @@ import { useResolve } from "@codescouts/di";
 import { GetMessageUseCase } from "@/core/application/get-message-usecase";
 import { Message } from "@/core/domain/model/Message";
 
+export const DEFAULT_MESSAGE = "Error loading message";
+export const ERROR_FETCHING_MESSAGE = "Error fetching message:";
+
 export const useHomeViewModel = () => {
   const [message, setMessage] = useState<string>("");
-
   const getMessageUseCase = useResolve(GetMessageUseCase);
 
   useEffect(() => {
@@ -14,8 +16,8 @@ export const useHomeViewModel = () => {
         const result: Message = await getMessageUseCase.execute();
         setMessage(result.content);
       } catch (error) {
-        console.error("Error fetching message:", error);
-        setMessage("Error loading message");
+        console.error(ERROR_FETCHING_MESSAGE, error);
+        setMessage(DEFAULT_MESSAGE);
       }
     };
 

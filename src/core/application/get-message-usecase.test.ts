@@ -8,17 +8,17 @@ import { faker } from "@faker-js/faker";
 const EXPECTED_CALL_COUNT = 1;
 
 describe("GetMessageUseCase", () => {
-  test("should retrieve a message from the repository", () => {
+  test("should retrieve a message from the repository", async () => {
     const fakeMessageContent = faker.lorem.sentence();
     const mockMessage = new Message(fakeMessageContent);
 
 
     const messageRepository = mock<MessageRepository>({
-      getMessage: jest.fn().mockReturnValue(mockMessage) as () => Message,
+      getMessage: jest.fn<() => Promise<Message>>().mockResolvedValue(mockMessage),
     });
 
     const useCase = new GetMessageUseCase(messageRepository);
-    const result = useCase.execute();
+    const result = await useCase.execute();
 
     expect(messageRepository.getMessage).toHaveBeenCalledTimes(EXPECTED_CALL_COUNT);
     expect(result.content).toBe(fakeMessageContent);
