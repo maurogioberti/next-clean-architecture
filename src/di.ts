@@ -1,26 +1,14 @@
-import { register } from "ts-injecty";
-import { useEventDispatcher } from "@codescouts/ui";
-
-import { GetMessageUseCase } from "@/core/application/get-message-usecase";
-import { MessageRepositoryImpl } from "@/core/infrastructure/repository/MessageRepositoryImpl";
+import { container } from "@/core/crosscutting/injection/DependencyInjectionContainer";
 import { MessageServiceImpl } from "@/core/infrastructure/services/MessageServiceImpl";
+import { MessageRepositoryImpl } from "@/core/infrastructure/repository/MessageRepositoryImpl";
+import { GetMessageUseCase } from "@/core/application/get-message-usecase";
 
-export const buildDependencies = (builder: typeof register) => {
-  return [
-    builder(useEventDispatcher.name)
-      .withDynamic(() => useEventDispatcher())
-      .build(),
-
-    builder(MessageServiceImpl.getInterface())
-      .withDynamic(() => new MessageServiceImpl())
-      .build(),
-
-    builder(MessageRepositoryImpl.getInterface())
-      .withDynamic(() => new MessageRepositoryImpl(new MessageServiceImpl()))
-      .build(),
-
-    builder(GetMessageUseCase)
-      .withDependency(MessageRepositoryImpl.getInterface())
-      .build(),
-  ];
-};
+export function setupDependencies() {
+  container.register(MessageServiceImpl.name, () => new MessageServiceImpl());
+  container.register(MessageRepositoryImpl.name, () =>
+    new MessageRepositoryImpl(container.resolve(MessageServiceImpl.name))
+  );
+  container.register(GetMessageUseCase.name, () =>
+    new GetMessageUseCase(container.resolve(MessageRepositoryImpl.name))
+  );
+}

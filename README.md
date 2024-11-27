@@ -61,6 +61,9 @@ project-root/
 │   ├── core/  # Clean Architecture Core Logic
 │   │   ├── application/  # Use cases
 │   │   │   └── get-message-usecase.ts --> Handles application-specific logic
+│   │   ├── crosscutting/  # Shared utilities and cross-cutting concerns
+│   │   │   └── injection/
+│   │   │       └── DependencyInjectionContainer.ts --> Configures DI container and bindings
 │   │   ├── domain/  # Business rules
 │   │   │   ├── events/
 │   │   │   │   └── MessageEvent.ts --> Represents a domain event for notifications
@@ -94,7 +97,7 @@ project-root/
 Clean Architecture makes testing simple:
 
 - **Isolated Layers**: Test each layer independently (Domain, Application, Infrastructure).
-- **Mockable Dependencies**: Easily replace services and repositories with mocks using `@codescouts/di`.
+- **Mockable Dependencies**: Easily replace services and repositories with mocks.
 - **Solid Coverage**: Unit and integration tests for core; smoke tests suggested for UI.
 
 ## ✨ Naming Conventions
@@ -106,7 +109,7 @@ Consistency is key! Here's the naming convention used in this project:
 |----------------------------|------------------------------|--------------------|----------------------------------------------|--------------------------------|
 | Pages                      | `page.tsx`                   | camelCase          | UI entry points for each route               | Represents Next.js pages       |
 | Components                 | `HomeBanner.tsx`             | PascalCase         | Reusable UI components                       | Stateless, reusable pieces     |
-| ViewModels (Hooks)         | `useHomeViewModel.ts`        | camelCase          | UI business logic                            | Encapsulates state             |
+| ViewModels                 | `useHomeViewModel.ts`        | camelCase          | UI business logic                            | Encapsulates state             |
 | Domain Event               | `MessageEvent.ts`            | PascalCase         | Models domain-specific events                | Example: Notification triggers |
 | Domain Model               | `Message.ts`                 | PascalCase         | Defines business entities                    | Core entities for the domain   |
 | Domain Repository          | `MessageRepository.ts`       | PascalCase         | Abstracts data access logic                  | Interface for persistence      |
@@ -118,11 +121,9 @@ Consistency is key! Here's the naming convention used in this project:
 
 ## 🧑‍💻 About This Project
 
-This is a **Clean Architecture** implementation in **Next.js**, inspired by [Damian Pumar](https://damianpumar.com) and the amazing work at [CodeScouts Academy](https://www.codescouts.academy/). It uses:
+This is a **Clean Architecture** implementation in **Next.js**, inspired by [Damian Pumar](https://damianpumar.com) and the amazing work at [CodeScouts Academy](https://www.codescouts.academy/). 
 
-- 🧪 `@codescouts/test` → Simplifies testing and mocking
-- 💉 `@codescouts/di` → Dependency injection for clean and reusable code
-- 🌐 `@codescouts/ui` → UI helpers to work with events and DI in React
+Based on their approach to Clean Architecture, it does not use any of their libraries, as they are CSR-focused. Instead, we implemented our own methods to handle DI with SSR.
 
 If you’re interested in Clean Architecture, check out their [React Template](https://github.com/codescouts-academy/react-clean-architecture).
 

@@ -1,8 +1,7 @@
-"use client";
-
-import { DependencyInjectionContainer } from "@codescouts/di";
-import { buildDependencies } from "../di";
+import { setupDependencies } from "../di";
 import "./globals.css";
+
+setupDependencies();
 
 export default function RootLayout({
   children,
@@ -11,11 +10,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <DependencyInjectionContainer builder={buildDependencies}>
-        {children as React.ReactElement}
-        </DependencyInjectionContainer>
-      </body>
+      <head>
+        <title>Next.js Clean Architecture Template</title>
+        <meta name="description" content="Welcome to the Next.js template website using clean architecture." />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
