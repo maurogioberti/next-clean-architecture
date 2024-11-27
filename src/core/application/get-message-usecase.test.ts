@@ -1,4 +1,3 @@
-import { mock } from "@codescouts/test/jest";
 import { MessageRepository } from "@/core/domain/repository/MessageRepository";
 import { GetMessageUseCase } from "./get-message-usecase";
 import { Message } from "@/core/domain/model/Message";
@@ -12,15 +11,16 @@ describe("GetMessageUseCase", () => {
     const fakeMessageContent = faker.lorem.sentence();
     const mockMessage = new Message(fakeMessageContent);
 
-
-    const messageRepository = mock<MessageRepository>({
+    const messageRepository: MessageRepository = {
       getMessage: jest.fn<() => Promise<Message>>().mockResolvedValue(mockMessage),
-    });
+    };
 
     const useCase = new GetMessageUseCase(messageRepository);
     const result = await useCase.execute();
 
-    expect(messageRepository.getMessage).toHaveBeenCalledTimes(EXPECTED_CALL_COUNT);
+    expect(messageRepository.getMessage).toHaveBeenCalledTimes(
+      EXPECTED_CALL_COUNT
+    );
     expect(result.content).toBe(fakeMessageContent);
   });
 });
