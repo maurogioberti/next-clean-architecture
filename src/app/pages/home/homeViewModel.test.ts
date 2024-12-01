@@ -1,4 +1,4 @@
-import { useHomeViewModel } from "./useHomeViewModel";
+import { homeViewModel } from "./homeViewModel";
 import { Message } from "@/core/domain/model/Message";
 import { describe, test, expect, jest } from "@jest/globals";
 import { faker } from "@faker-js/faker";
@@ -14,7 +14,7 @@ jest.mock("@/core/crosscutting/injection/DependencyInjectionContainer", () => ({
   },
 }));
 
-describe("useHomeViewModel", () => {
+describe("homeViewModel", () => {
   test("should fetch and return a message", async () => {
     const fakeMessageContent = faker.lorem.sentence();
     const mockMessage = new Message(fakeMessageContent);
@@ -25,7 +25,7 @@ describe("useHomeViewModel", () => {
 
     jest.mocked(container.useResolve).mockReturnValue(getMessageUseCase);
 
-    const result = await useHomeViewModel();
+    const result = await homeViewModel();
 
     expect(result.message).toBe(fakeMessageContent);
     expect(getMessageUseCase.execute).toHaveBeenCalledTimes(EXPECTED_CALL_COUNT);
@@ -40,7 +40,7 @@ describe("useHomeViewModel", () => {
     
     jest.spyOn(console, CONSOLE_ERROR_METHOD).mockImplementation(() => {});
 
-    await useHomeViewModel();
+    await homeViewModel();
 
     expect(getMessageUseCase.execute).toHaveBeenCalledTimes(EXPECTED_CALL_COUNT);
     expect(console.error).toHaveBeenCalledWith(ERROR_FETCHING_MESSAGE, expect.any(Error));

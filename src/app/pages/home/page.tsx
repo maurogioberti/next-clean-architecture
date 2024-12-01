@@ -1,7 +1,7 @@
-import { useHomeViewModel } from "./useHomeViewModel";
+import { homeViewModel } from "./homeViewModel";
 
 export default async function Home() {
-  const { message } = await useHomeViewModel();
+  const { message } = await homeViewModel();
 
   return (
     <div className="grid min-h-screen items-center justify-center bg-vs-background text-vs-foreground font-sans p-10">

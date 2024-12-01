@@ -83,7 +83,7 @@ project-root/
 │       ├── layout.tsx --> Global layout
 │       ├── pages/  # Next.js pages
 │       │   ├── page.tsx --> Page Home component (View)
-│       │   └── useHomeViewModel.ts --> Page Home UI business logic (ViewModel)
+│       │   └── homeViewModel.ts --> Page Home UI business logic (ViewModel)
 │       └── components/  # Reusable UI components
 │           └── HomeBanner.tsx --> Example of a reusable banner component
 ├── public/  # Static assets (e.g., favicon)
@@ -109,7 +109,7 @@ Consistency is key! Here's the naming convention used in this project:
 |----------------------------|------------------------------|--------------------|----------------------------------------------|--------------------------------|
 | Pages                      | `page.tsx`                   | camelCase          | UI entry points for each route               | Represents Next.js pages       |
 | Components                 | `HomeBanner.tsx`             | PascalCase         | Reusable UI components                       | Stateless, reusable pieces     |
-| ViewModels                 | `useHomeViewModel.ts`        | camelCase          | UI business logic                            | Encapsulates state             |
+| ViewModels                 | `homeViewModel.ts`           | camelCase          | UI business logic                            | Encapsulates state             |
 | Domain Event               | `MessageEvent.ts`            | PascalCase         | Models domain-specific events                | Example: Notification triggers |
 | Domain Model               | `Message.ts`                 | PascalCase         | Defines business entities                    | Core entities for the domain   |
 | Domain Repository          | `MessageRepository.ts`       | PascalCase         | Abstracts data access logic                  | Interface for persistence      |
