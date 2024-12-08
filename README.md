@@ -1,7 +1,7 @@
 
 <p align="center">
   <a href="https://maurogioberti.com" target="_blank">
-    <img alt="Mauro Gioberti" src="https://maurogioberti.com/maurogioberti.png" width="200" />
+    <img alt="Mauro Gioberti" src="https://maurogioberti.com/assets/profile/maurogioberti-avatar.png" width="200" />
   </a>
 </p>
 
