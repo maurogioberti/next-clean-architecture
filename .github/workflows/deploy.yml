@@ -1,4 +1,4 @@
-# Builds the static export and deploys it to GitHub Pages.
+# Builds the static export, runs the quality gates, and deploys to GitHub Pages.
 #
 # Next.js docs: https://nextjs.org/docs/app/building-your-application/deploying/static-exports
 name: Deploy Next.js site to Pages
@@ -24,7 +24,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Build job
+  # Build job: produces the export and smoke-tests it (see scripts/verify-export.mjs).
   build:
     runs-on: ubuntu-latest
     steps:
@@ -33,8 +33,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          # Track the Active LTS line. Use a literal major, never lts/*, so a
-          # new LTS cannot switch the build runtime without a commit.
+          # The runtime comes from .nvmrc, so local and CI can never drift.
           node-version-file: ".nvmrc"
           cache: npm
       - name: Setup Pages
@@ -59,21 +58,44 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build with Next.js
-        # The package script, not `next build` directly, so any pre/post build
-        # step declared in package.json also runs here.
+        # The package script, not `next build` directly, so the post-build
+        # export verification also runs here.
         run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: ./out
 
-  # Deployment job
+  # Quality gates: lint, types and the unit suite. Nothing here needs the
+  # Pages token, so the job drops to read-only permissions.
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: ".nvmrc"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Test
+        run: npm test
+
+  # Deployment job: only after the export was produced AND the gates passed.
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, test]
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

@@ -28,7 +28,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/verify-export.mjs",
     "preview": "npx --yes serve@latest out",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
