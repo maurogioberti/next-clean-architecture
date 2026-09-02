@@ -1,4 +1,4 @@
-import { GetMessageUseCase } from "@/core/application/get-message-usecase";
+import { GetMessageUseCase } from "@/core/application/get-message-use-case";
 import { DependencyIdentifiers } from "@/core/crosscutting/injection/DependencyIdentifiers";
 import {
   container,

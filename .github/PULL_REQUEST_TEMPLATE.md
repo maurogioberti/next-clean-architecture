@@ -1,19 +1,15 @@
 ### Description
-Quick summary of the changes in this PR. Mention any context, design choices, or goals.
-
-```
-- Main changes include:
-  - List out each significant change.
-  - Link to the files or lines of code if you can.
-```
+What changes and why. Mention design choices worth knowing about.
 
 ### Checklist
-- [ ] Code compiles fine.
-- [ ] No new warnings or errors.
-- [ ] Follows the project's coding convention.
+- [ ] `npm run lint` passes
+- [ ] `npm run typecheck` passes
+- [ ] `npm test` passes
+- [ ] `npm run build` passes (includes the export smoke test)
+- [ ] Follows the naming conventions in the README
 
-### Linked Tasks
-JIRA Ticket QTA-XX
+### Linked issues
+Closes #
 
-### Additional Notes
-Add any extra info you think the team should know when checking your PR.
+### Notes
+Anything a reviewer should know: follow-ups, trade-offs, screenshots.

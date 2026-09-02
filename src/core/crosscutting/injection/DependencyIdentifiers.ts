@@ -1,4 +1,4 @@
-import type { GetMessageUseCase } from "@/core/application/get-message-usecase";
+import type { GetMessageUseCase } from "@/core/application/get-message-use-case";
 import type { MessageRepository } from "@/core/domain/repository/MessageRepository";
 import type { MessageService } from "@/core/domain/services/MessageService";
 
