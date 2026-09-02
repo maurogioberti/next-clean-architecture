@@ -5,7 +5,7 @@ import { faker } from "@faker-js/faker";
 describe("DependencyInjectionContainer", () => {
   test("should register and resolve a dependency", () => {
     const container = new DependencyInjectionContainer();
-    const dependencyKey = faker.lorem.word();
+    const dependencyKey = faker.string.uuid();
     const dependencyValue = faker.number.int();
 
     container.register(dependencyKey, () => ({ value: dependencyValue }));
@@ -17,7 +17,7 @@ describe("DependencyInjectionContainer", () => {
   test("should return the same instance for multiple resolves", () => {
     const container = new DependencyInjectionContainer();
     let instanceCreationCount = 0;
-    const singletonKey = faker.lorem.word();
+    const singletonKey = faker.string.uuid();
     const EXPECTED_INSTANCE_CREATION_COUNT = 1;
 
     container.register(singletonKey, () => {
@@ -34,16 +34,16 @@ describe("DependencyInjectionContainer", () => {
 
   test("should throw error when resolving unregistered key", () => {
     const container = new DependencyInjectionContainer();
-    const unregisteredKey = faker.lorem.word();
+    const unregisteredKey = faker.string.uuid();
     const EXPECTED_ERROR_MESSAGE = `No factory found for key: ${unregisteredKey}`;
 
-    expect(() => container.resolve(unregisteredKey)).toThrowError(EXPECTED_ERROR_MESSAGE);
+    expect(() => container.resolve(unregisteredKey)).toThrow(EXPECTED_ERROR_MESSAGE);
   });
 
-  test("debe soportar múltiples claves diferentes", () => {
+  test("should support multiple different keys", () => {
     const container = new DependencyInjectionContainer();
-    const firstDependencyKey = faker.lorem.word();
-    const secondDependencyKey = faker.lorem.word();
+    const firstDependencyKey = faker.string.uuid();
+    const secondDependencyKey = faker.string.uuid();
     const firstDependencyValue = faker.word.sample();
     const secondDependencyValue = faker.word.sample();
 
@@ -54,9 +54,9 @@ describe("DependencyInjectionContainer", () => {
     expect(container.resolve(secondDependencyKey)).toBe(secondDependencyValue);
   });
 
-  test("should throw error when resolving unregistered key", () => {
+  test("should resolve complex objects correctly", () => {
     const container = new DependencyInjectionContainer();
-    const userDependencyKey = faker.lorem.word();
+    const userDependencyKey = faker.string.uuid();
     const userDependencyValue = {
       name: faker.person.fullName(),
       age: faker.number.int(),
