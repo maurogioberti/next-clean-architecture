@@ -1,21 +1,20 @@
-import { setupDependencies } from "../di";
 import "./globals.css";
 
+import layoutMetadata from "@/core/crosscutting/seo/layout";
+
+import { setupDependencies } from "../di";
+
+// Registering at module scope runs once per server or build process. The
+// container itself lives on globalThis, so Next re-evaluating this module per
+// route segment does not produce a second, empty container.
 setupDependencies();
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const metadata = layoutMetadata;
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <title>Next.js Clean Architecture Template</title>
-        <meta name="description" content="Welcome to the Next.js template website using clean architecture." />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </head>
-      <body>{children}</body>
+      <body className="min-h-screen antialiased">{children}</body>
     </html>
   );
 }

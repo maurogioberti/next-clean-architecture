@@ -1,37 +1,65 @@
 @import "tailwindcss";
 
+/* An explicit choice wins over the OS preference; used by the theme toggle. */
+@custom-variant dark (&:where([data-theme='dark'] *));
+
+/* Expose the design tokens as utilities: bg-vs-background, text-vs-primary, border-vs-border... */
+@theme {
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+
+  --color-vs-background: var(--vs-background);
+  --color-vs-background-secondary: var(--vs-background-secondary);
+  --color-vs-foreground: var(--vs-foreground);
+  --color-vs-foreground-muted: var(--vs-foreground-muted);
+  --color-vs-heading: var(--vs-heading);
+  --color-vs-primary: var(--vs-primary);
+  --color-vs-primary-light: var(--vs-primary-light);
+  --color-vs-border: var(--vs-border);
+}
+
+/* Dark is the default palette and the explicit dark theme. */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --vs-background: #0a0a0f;
+  --vs-background-secondary: #12121a;
+  --vs-foreground: #e4e4e7;
+  --vs-foreground-muted: #a1a1aa;
+  --vs-heading: #ffffff;
+  --vs-primary: #3b82f6;
+  --vs-primary-light: #60a5fa;
+  --vs-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Light palette: when the OS prefers it and no theme was chosen... */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --vs-background: #ffffff;
+    --vs-background-secondary: #f8fafc;
+    --vs-foreground: #0f172a;
+    --vs-foreground-muted: #475569;
+    --vs-heading: #020617;
+    --vs-primary: #2563eb;
+    --vs-primary-light: #3b82f6;
+    --vs-border: rgba(15, 23, 42, 0.12);
+  }
+}
+
+/* ...or when the visitor picked it explicitly. */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --vs-background: #ffffff;
+  --vs-background-secondary: #f8fafc;
+  --vs-foreground: #0f172a;
+  --vs-foreground-muted: #475569;
+  --vs-heading: #020617;
+  --vs-primary: #2563eb;
+  --vs-primary-light: #3b82f6;
+  --vs-border: rgba(15, 23, 42, 0.12);
+}
+
 body {
   background-color: var(--vs-background);
   color: var(--vs-foreground);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-:root {
-  --vs-background: #1e1e1e;
-  --vs-foreground: #d4d4d4;
-  --vs-primary: #569cd6;
-  --vs-button: #007acc;
-  --vs-button-hover: #005a9e;
-  --vs-background-light: #2d2d2d;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --vs-background: #ffffff;
-    --vs-foreground: #000000;
-    --vs-primary: #007acc;
-    --vs-button: #005a9e;
-    --vs-button-hover: #003f73;
-    --vs-background-light: #f3f3f3;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --vs-background: #0a0a0a;
-      --vs-foreground: #cccccc;
-      --vs-primary: #569cd6;
-      --vs-button: #005a9e;
-      --vs-button-hover: #003f73;
-    }
-  }
 }
