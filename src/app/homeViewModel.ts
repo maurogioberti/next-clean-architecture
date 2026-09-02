@@ -1,4 +1,3 @@
-import { GetMessageUseCase } from "@/core/application/get-message-usecase";
 import { DependencyIdentifiers } from "@/core/crosscutting/injection/DependencyIdentifiers";
 import { container } from "@/core/crosscutting/injection/DependencyInjectionContainer";
 
@@ -6,7 +5,7 @@ export const DEFAULT_MESSAGE = "Error loading message";
 export const ERROR_MESSAGE_PREFIX = "Error fetching message:";
 
 export async function homeViewModel() {
-  const getMessageUseCase = container.resolve<GetMessageUseCase>(DependencyIdentifiers.USE_CASES.GET_MESSAGE);
+  const getMessageUseCase = container.resolve(DependencyIdentifiers.USE_CASES.GET_MESSAGE);
 
   try {
     const result = await getMessageUseCase.execute();
