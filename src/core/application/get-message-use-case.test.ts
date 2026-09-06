@@ -1,5 +1,5 @@
 import { MessageRepository } from "@/core/domain/repository/MessageRepository";
-import { GetMessageUseCase } from "./get-message-usecase";
+import { GetMessageUseCase } from "./get-message-use-case";
 import { Message } from "@/core/domain/model/Message";
 import { describe, test, expect, jest } from "@jest/globals";
 import { faker } from "@faker-js/faker";

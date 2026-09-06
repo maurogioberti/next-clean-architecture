@@ -1,5 +1,12 @@
-import { redirect } from "next/navigation";
+import { HomeBanner } from "@/app/components/HomeBanner";
+import homeMetadata from "@/core/crosscutting/seo/home";
 
-export default function RootPage() {
-  redirect("/pages/home");
+import { homeViewModel } from "./homeViewModel";
+
+export const metadata = homeMetadata;
+
+export default async function HomePage() {
+  const { message } = await homeViewModel();
+
+  return <HomeBanner message={message} />;
 }
